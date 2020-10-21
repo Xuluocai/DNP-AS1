@@ -1,0 +1,169 @@
+﻿@page "/"
+@inject NavigationManager NavigationManager;
+
+
+<br>
+<h3 class="text-center">@temICON @regorlog</h3>
+<hr>
+<br >
+<div >@error</div>
+<br>
+<div class="=text-center">
+    <br>
+    <form >
+        <span>UserName:</span>
+        <input name="UserName" @bind="UserName" />
+    </form>
+    <br />
+    <form>
+        <span>Password</span>
+        <input type="password" name="Password" @bind="Password"/>
+    </form><br />
+    @if (regorlog == "Register")
+    {
+        <form><span>Confirm</span><input type="password" name="CPassword" @bind="CPassword" /></form><br /><hr />
+
+    }
+    else { <hr>}
+    <div>
+        <button @onclick="ClickLogin">Login</button>
+        <button @onclick="ClickReg">Register</button>
+        
+    </div><br>
+</div>
+
+@code {
+
+    private String temICON = "Login";
+    private String regorlog { get; set; }
+    private String error { get; set; }
+    private String UserName{ get; set; }
+    private String Password { get; set; }
+    private String CPassword { get; set; }
+    private User User;
+    private Boolean isreg;
+    private UserArray UserArray;
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserArray = new UserArray(new List<User>());
+    }
+
+    public void CreateUser(String UserName,String Password)
+    {
+        Console.WriteLine("Creation init");
+        this.UserName = UserName;
+        this.Password = Password;
+        User = new User(UserName, Password);
+        Console.WriteLine("Creation" + UserName);
+        Console.WriteLine("Userarray" + UserArray);
+        UserArray.addUser(User);
+        Console.WriteLine("Creation complete");
+    }
+    public void ClickReg()
+    {
+        error = "";
+        if (isreg == false)
+        {
+            temICON = null;
+            isreg = true;
+            regorlog = "Register";
+            StateHasChanged();
+            Console.WriteLine("Change");
+        }
+        else
+        {
+            if (UserName == null || Password == null)
+            {
+                error = "Wrong!";
+            }
+            else { error = "";
+                User usert = new User(UserName, Password);
+                for(int i = 0; i < UserArray.getSize(); i++)
+                {
+                    if (usert.name.Equals(UserArray.getUser(i).name)) {
+                        error = "Has existed";
+                        break;
+                    }
+                }
+                if (Password == CPassword)
+                {
+                    reg();
+                    UserName = null;
+                    Password = null;
+                    CPassword = null;
+
+                }
+                else { error = "Password doesn't match"; }
+            }
+        }
+    }
+    private void reg()
+    {
+        Console.WriteLine("UserName:" + UserName + "Password" + Password + "CPassword" + CPassword);
+        Console.WriteLine("reginit");
+        CreateUser(UserName, Password);
+        Console.WriteLine("123" + UserArray.getUserByUser(User));
+        Console.WriteLine("Creat complete." + UserArray.getSize() + UserArray.getUserByUser(User).name + UserArray.getUserByUser(User).password);
+    }
+    public void ClickLogin()
+    {
+        Console.WriteLine("111");
+        error = "";
+        if (isreg == true)
+        {
+            temICON = null;
+            isreg = false;
+            regorlog = "Login";
+            StateHasChanged();
+        }
+        else
+        {
+            if (UserName == null || Password == null)
+            {
+                error = "";
+                error = "Your are in register page";
+            }
+            else
+            {
+                if (LoginVierfy())
+                {
+                    Console.WriteLine("123");
+                    NavigationManager.NavigateTo("View");
+                }
+            }
+        }
+    }
+    public Boolean LoginVierfy()
+    {
+        Boolean a = false;
+        error = "";
+
+        for (int i = 0; i < UserArray.getSize(); i++)
+        {
+            if (UserArray.getUser(i).name.Equals(UserName) && UserArray.getUser(i).password.Equals(Password))
+            {
+                a = true;
+                Console.Write("Naving");
+                NavigationManager.NavigateTo("View");
+                break;
+            }
+            else
+            {
+                a = false;
+                error = "Wrong";
+            }
+        }
+        return a;
+    }
+
+    public bool SidebarToggle = false;
+    public void Close()
+    {
+        SidebarToggle = false;
+    }
+
+
+
+}
+
