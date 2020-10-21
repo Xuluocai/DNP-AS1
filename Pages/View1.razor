@@ -1,0 +1,70 @@
+﻿@page "/View"
+@inject NavigationManager NavigationManager;
+@inject AdultList AdultList;
+<div>
+   <form>
+        <span>Search</span><br />
+        <input type="text" name="SearchPlace" @bind="AdultName">
+    </form>
+    <br />
+    <button @onclick="Search">Search</button>
+    <br />
+
+</div>
+<div>
+    <table class="text-center">
+        <thead>
+            <tr><th>FirstName</th>
+            <th>LastName</th>
+            <th>Id</th>
+            <th>Sex</th>
+            <th>Height</th>
+            <th>Weight</th>
+            <th>HairColor</th>
+            <th>EyeColor</th>
+            <th>Age</th>
+            <th>Job</th>
+</tr>
+        </thead>
+
+<tbody>
+    @foreach (var adult in Tlist) { 
+    <tr>
+        <td>@adult.FirstName</td>
+        <td>@adult.LastName</td>
+        <td>@adult.Id</td>
+        <td>@adult.Sex</td>
+        <td>@adult.Height</td>
+<td>@adult.Weight</td>
+    <td>@adult.HairColor</td>
+    <td>@adult.EyeColor</td>
+    <td>@adult.Age</td>
+    <td>@adult.Job</td></tr>}</tbody>    </table>
+    <br />
+    <div>
+        <button @onclick="goadd">Add new</button>
+
+    </div>
+</div>
+@code {
+    private String AdultName;
+    private List<Adult> Tlist = new List<Adult>();
+    private Job job = new Job();
+
+    public void Search()
+    {
+        Tlist = AdultList.getAdultListByName(AdultName);
+    }
+    public void goadd()
+    {
+        NavigationManager.NavigateTo("Add");
+    }
+   protected override async Task OnInitializedAsync()
+    {
+        Tlist = AdultList.getList();
+
+    }
+
+
+
+}
