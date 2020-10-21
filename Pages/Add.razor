@@ -1,0 +1,86 @@
+﻿@page "/Add"
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject AdultList AdultList;
+
+<h1>Add</h1>
+<h3>Adult</h3>
+<hr />
+[<div>
+    <form>
+        <span>FirstName</span>
+        <br />
+        <input type="text" name="FirstName" @bind="FirstName">
+    </form>
+    <form>
+        <span>LastName</span>
+        <br />
+        <input type="text" name="LasttName" @bind="LastName">
+    </form>
+    <form>
+        <span>Age</span>
+        <br />
+        <input type="text" name="Age" @bind="age">
+    </form>
+    <form>
+        <span>Height</span>
+        <br />
+        <input type="text" name="Height" @bind="height">
+    </form>
+    <form>
+        <span>Weight</span>
+        <br />
+        <input type="text" name="Weight" @bind="weight">
+    </form>
+    <form>
+        <span>Job</span>
+        <br />
+        <input type="text" name="Job" @bind="job" />
+    </form>
+
+    <div><button @onclick="add">Add</button></div>
+
+    <div><button @onclick="goback">Back to View</button></div>
+</div>
+
+@code {
+    private string FirstName;
+    private string LastName;
+    private int age;
+    private int weight;
+    private string sex;
+    private string job;
+    private int height;
+    private string HairColor;
+    private string EyeColor;
+    public void add()
+    {
+        Person person = new Person();
+        person.Age = age;
+        person.EyeColor = EyeColor;
+        person.HairColor = HairColor;
+        person.Weight = weight;
+        person.Sex = sex;
+        person.FirstName = FirstName;
+        person.LastName = LastName;
+        Adult adult = new Adult(person, job);
+        AdultList.AddAdult(adult);
+        FirstName = "";
+        LastName = "";
+        HairColor = "";
+        EyeColor = "";
+        age = 0;
+        height = 0;
+        weight = 0;
+        sex = "";
+        job = "";
+    }
+
+  
+    public void goback()
+    {
+        NavigationManager.NavigateTo("View");
+    }
+
+
+}
