@@ -1,0 +1,88 @@
+﻿@page "/Edit"
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+
+<h1>Edit</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Person.ID" />
+            <div class="form-group">
+                <label asp-for="Person.LastName" class="custom-control-label"></label>
+                <input asp-for="Person.LastName " class="form-control" @bind="lastName" />
+                <span asp-validation-for="Person.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.FirstName" class="custom-control-label"></label>
+                <input asp-for="Person.FirstName " class="form-control" @bind="firstName" />
+                <span asp-validation-for="Person.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.Age" class="custom-control-label"></label>
+                <input asp-for="Person.Age " class="form-control" @bind="age" />
+                <span asp-validation-for="Person.Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.Height" class="custom-control-label"></label>
+                <input asp-for="Person.Height " class="form-control" @bind="height" />
+                <span asp-validation-for="Person.Height" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.Weight" class="custom-control-label"></label>
+                <input asp-for="Person.Weight " class="form-control" @bind="weight" />
+                <span asp-validation-for="Person.Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.Sex" class="custom-control-label"></label>
+                <input asp-for="Person.Sex " class="form-control" @bind="sex" />
+                <span asp-validation-for="Person.Sex" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.HairColor" class="custom-control-label"></label>
+                <input asp-for="Person.HairColor " class="form-control" @bind="hairColor" />
+                <span asp-validation-for="Person.HairColor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.EyeColor" class="custom-control-label"></label>
+                <input asp-for="Person.EyeColor " class="form-control" @bind="eyeColor" />
+                <span asp-validation-for="Person.EyeColor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.Job" class="custom-control-label"></label>
+                <input asp-for="Person.Job " class="form-control" @bind="job" />
+                <span asp-validation-for="Person.Job" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button @onclick="Save">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <button @onclick="goback"></button>
+</div>
+@code {
+
+    private String lastName;
+    private String firstName;
+    private int age;
+    private string eyeColor;
+    private string hairColor;
+    private int height;
+    private String job;
+    private float weight;
+    private string sex;
+
+
+    public void Save()
+    {
+
+    }
+    public void goback()
+    {
+        NavigationManager.NavigateTo("View");
+    }
+}
